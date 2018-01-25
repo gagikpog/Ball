@@ -12,20 +12,20 @@ public:
 	Ball(float x,float y);
 	~Ball();
 
-	float X = 0, Y = 0, R = 50,VY = 0,VX = 0;
+	float X = 0, Y = 0, R = 50,VY = 2,VX = 2;
 	bool Gravity;
 
 
 	///////function
 	void Init();
 	void graviry();
-	float rebound(float x,float y,float vx,float vy);
+	void rebound(float x,float y,float vx,float vy);
 
 	int Mouse(int button, int state, int ax, int ay);
 	int Mouse(int ax, int ay); 
 
 private:
-	bool is_klick;
+	bool is_click;
 	float x1,y1;
 	BYTE color[3];
 

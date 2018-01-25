@@ -1,5 +1,6 @@
 #include "Ball.h"
 #include <vector>
+#include <ctime>
 
 int listH = 800;
 int listW = 800;
@@ -24,14 +25,12 @@ void Display()
 	glClearColor(1, 1, 1, 1);
 	glClear(GL_COLOR_BUFFER_BIT);
 
-	glBegin(GL_POLYGON);
-	glColor3f(0.0f, 0.0f, 1.0f);
-	glVertex2f(0, 0);
-	glVertex2f(0, listH / 2.0f);
-	glVertex2f(listW / 2.0f,0);
-
-
-	glEnd();
+//	glBegin(GL_POLYGON);
+//	glColor3f(0.0f, 0.0f, 1.0f);
+//	glVertex2f(0, 0);
+//	glVertex2f(0, listH / 2.0f);
+//	glVertex2f(listW / 2.0f,0);
+//	glEnd();
 
 	for (int i = 0; i < ball.size() - 1; i++)
 	{
@@ -44,13 +43,9 @@ void Display()
 	for (int i = 0; i < ball.size(); i++)
 	{
 		ball[i].Init();
-
-		if (ball[i].R < 0.1)
-			ball.erase(ball.begin());
+//		if (ball[i].R < 0.1)
+//			ball.erase(ball.begin());
 	}
-
-
-
 
 	glutSwapBuffers();
 }
@@ -59,7 +54,6 @@ void Reshop(int aw, int ah)
 {
 	listH = ah;
 	listW = aw;
-
 
 	glViewport(0, 0, aw, ah);
 	glMatrixMode(GL_PROJECTION);
@@ -80,7 +74,6 @@ void timer(int)
 		ball[i].graviry();
 	}
 
-	
 	glutTimerFunc(25, timer, 0);
 }
 
@@ -89,7 +82,7 @@ void keys(unsigned char key, int x, int y)
 	switch (key)
 	{
 	case 'a':{
-		glTranslatef(-10, 0, 0);//texapoxum
+//		glTranslatef(-10, 0, 0);//texapoxum
 
 		break; }
 
@@ -103,7 +96,7 @@ void keys(int key, int x, int y)
 	switch (key)
 	{
 	case GLUT_KEY_LEFT:
-		glRotatef(1, 0, 0, 1);//frcnel
+//		glRotatef(1, 0, 0, 1);//frcnel
 		break;
 	default:
 
@@ -135,14 +128,15 @@ void mouse(int button, int state, int ax, int ay)
 	if (button == 2 && state == 1)
 		ball.push_back(Ball());
 
-	if (button == 1 && state == 1)
-		ball[0].rebound(1,1,1,1);
+//	if (button == 1 && state == 1)
+//		ball[0].rebound(1,1,1,1);
 
 }
 
 
 int main(int argc, char**argv)
 {
+	srand(time(NULL));
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_RGB |GLUT_DOUBLE );
 	glutInitWindowPosition(200,200);
@@ -161,7 +155,7 @@ int main(int argc, char**argv)
 //	glRotatef(0, 0, 0, 0);//frcnel
 
 
-	for (int i = 0; i < 2; i++)
+	for (int i = 0; i < 3; i++)
 	{
 		ball.push_back(Ball(rand()% listW, rand() % listH));
 	}
