@@ -1,6 +1,6 @@
 #include "Ball.h"
 
-extern int listH , listW;
+extern int WndH , WndW;
 
 Ball::Ball()
 {
@@ -11,7 +11,6 @@ Ball::Ball()
 	color[0] = rand() % 255;
 	color[1] = rand() % 255;
 	color[2] = rand() % 255;
-	//VY = 20;
 }
 
 Ball::Ball(float x, float y)
@@ -26,7 +25,6 @@ Ball::Ball(float x, float y)
 	color[2] = rand() % 255;
 }
 
-
 Ball::~Ball()
 {
 }
@@ -34,7 +32,6 @@ Ball::~Ball()
 
 void Ball::Init()
 {
-
 	glBegin(GL_POLYGON);
 	glColor3b(color[0], color[1], color[2]);
 
@@ -49,11 +46,11 @@ void Ball::graviry()
 {
 	if (!is_click)
 	{
-		if (Y + VY < R || Y + VY > listH - R)
+		if (Y + VY < R || Y + VY > WndH - R)
 		{
 			VY *= -1;
 		}
-		if (X + VX < R || X + VX > listW - R)
+		if (X + VX < R || X + VX > WndW - R)
 		{
 			VX *= -1;
 		}
@@ -67,6 +64,7 @@ void Ball::graviry()
 	}
 	return;
 	////////////old code
+	/*/
 	if (!is_click){
 		if (Y - R > -VY)
 		{
@@ -87,11 +85,10 @@ void Ball::graviry()
 			VX = 0;
 
 		X += VX;
-		if (X >= listW-R||X <= R)
+		if (X >= WndW-R||X <= R)
 			VX = -VX;
 
-	}
-	//else H = Y;
+	}/**/
 }
 
 inline float len(float x1,float y1,float x2,float y2)
@@ -101,24 +98,23 @@ inline float len(float x1,float y1,float x2,float y2)
 
 void Ball::rebound(float x, float y, float vx, float vy)
 {
-
 	float proek, xx, yy, L, tx, ty;
 	xx = X;
 	yy = Y;
 
 	L = len(xx, yy, x, y);
 
-//	while ((L < R * 2))
-//	{
-//		xx -= VX*0.1; 
-//		yy -= VY*0.1;
-//		x -= vx*0.1;
-//		y -= vy*0.1;
-//		L = len(xx, yy, x, y);
-//	}
+	/*/
+	while ((L < R * 2))
+	{
+		xx -= VX*0.1; 
+		yy -= VY*0.1;
+		x -= vx*0.1;
+		y -= vy*0.1;
+		L = len(xx, yy, x, y);
+	}
+	return;/**/
 
-
-//	return;
 	xx = xx - x;
 	yy = yy - y;
 		
@@ -128,7 +124,6 @@ void Ball::rebound(float x, float y, float vx, float vy)
 
 	VX = VX + tx - vx*0.5f;
 	VY = VY + ty - vy*0.5f;
-	return ;/**/
 }
 
 int Ball::Mouse(int button, int state, int ax, int ay)

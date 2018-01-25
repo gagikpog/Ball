@@ -12,7 +12,7 @@ public:
 	Ball(float x,float y);
 	~Ball();
 
-	float X = 0, Y = 0, R = 50,VY = 2,VX = 2;
+	float X = 0, Y = 0, R = 50,VY = 0,VX = 0;
 	bool Gravity;
 
 

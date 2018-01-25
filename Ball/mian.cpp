@@ -2,14 +2,12 @@
 #include <vector>
 #include <ctime>
 
-int listH = 800;
-int listW = 800;
-
 using namespace std;
 
-vector<Ball> ball;
+int WndH = 800;
+int WndW = 800;
 
-//Ball one;
+vector<Ball> balls;
 
 void test(Ball& b1, Ball& b2)
 {
@@ -25,40 +23,24 @@ void Display()
 	glClearColor(1, 1, 1, 1);
 	glClear(GL_COLOR_BUFFER_BIT);
 
-//	glBegin(GL_POLYGON);
-//	glColor3f(0.0f, 0.0f, 1.0f);
-//	glVertex2f(0, 0);
-//	glVertex2f(0, listH / 2.0f);
-//	glVertex2f(listW / 2.0f,0);
-//	glEnd();
+	for (int i = 0; i < (int (balls.size())) - 1; i++)
+		for (int j = i + 1; j < balls.size(); j++)
+			test(balls[i], balls[j]);
 
-	for (int i = 0; i < ball.size() - 1; i++)
-	{
-		for (int j = i + 1; j < ball.size(); j++)
-		{
-			test(ball[i], ball[j]);
-		}
-	}
-
-	for (int i = 0; i < ball.size(); i++)
-	{
-		ball[i].Init();
-//		if (ball[i].R < 0.1)
-//			ball.erase(ball.begin());
-	}
+	for (int i = 0; i < balls.size(); i++)
+		balls[i].Init();
 
 	glutSwapBuffers();
 }
 
 void Reshop(int aw, int ah)
 {
-	listH = ah;
-	listW = aw;
-
+	WndH = ah;
+	WndW = aw;
 	glViewport(0, 0, aw, ah);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluOrtho2D(0, listW, 0, listH);
+	gluOrtho2D(0, WndW, 0, WndH);
 
 	glMatrixMode(GL_MODELVIEW);
 
@@ -66,14 +48,9 @@ void Reshop(int aw, int ah)
 
 void timer(int)
 {
-
-	glutPostRedisplay();//ej@ obnavit
-
-	for (int i = 0; i < ball.size(); i++)
-	{
-		ball[i].graviry();
-	}
-
+	glutPostRedisplay();
+	for (int i = 0; i < balls.size(); i++)
+		balls[i].graviry();
 	glutTimerFunc(25, timer, 0);
 }
 
@@ -81,11 +58,8 @@ void keys(unsigned char key, int x, int y)
 {
 	switch (key)
 	{
-	case 'a':{
-//		glTranslatef(-10, 0, 0);//texapoxum
-
-		break; }
-
+	case 'c': balls.clear();
+		break;
 	default:
 		break;
 	}
@@ -93,46 +67,29 @@ void keys(unsigned char key, int x, int y)
 
 void keys(int key, int x, int y)
 {
-	switch (key)
-	{
-	case GLUT_KEY_LEFT:
-//		glRotatef(1, 0, 0, 1);//frcnel
-		break;
-	default:
-
-		break;
-	}
-
 }
-
 
 void mouse(int ax, int ay)
 {
-	for (int i = 0; i < ball.size(); i++)
+	for (int i = 0; i < balls.size(); i++)
 	{
-		ball[i].Mouse(ax, listH - ay);
+		balls[i].Mouse(ax, WndH - ay);
 	}
 }
+
 void mouse(int state, int ax, int ay)
 {
 }
 
 void mouse(int button, int state, int ax, int ay)
 {
-
-	for (int i = 0; i < ball.size(); i++)
-	{
-		ball[i].Mouse(button, state, ax, listH - ay);
-	}
+	if(button == 0)
+		for (int i = 0; i < balls.size(); i++)
+			balls[i].Mouse(button, state, ax, WndH - ay);
 
 	if (button == 2 && state == 1)
-		ball.push_back(Ball());
-
-//	if (button == 1 && state == 1)
-//		ball[0].rebound(1,1,1,1);
-
+		balls.push_back(Ball(ax,WndH - ay));
 }
-
 
 int main(int argc, char**argv)
 {
@@ -140,41 +97,31 @@ int main(int argc, char**argv)
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_RGB |GLUT_DOUBLE );
 	glutInitWindowPosition(200,200);
-	glutInitWindowSize(listW,listH);
-	glutCreateWindow("Gagik");
+	glutInitWindowSize(WndW,WndH);
+	glutCreateWindow("Ball");
 
 	glClearColor(1, 1, 1, 1);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluOrtho2D(0, listW, 0, listH );
+	gluOrtho2D(0, WndW, 0, WndH );
 
 	glMatrixMode(GL_MODELVIEW);
 
-//	glTranslatef(0, 0, 0);//texapoxum
-//	glScalef(0.8, 0.8, 0.8);//sexmel
-//	glRotatef(0, 0, 0, 0);//frcnel
-
-
 	for (int i = 0; i < 3; i++)
-	{
-		ball.push_back(Ball(rand()% listW, rand() % listH));
-	}
+		balls.push_back(Ball(rand()% WndW, rand() % WndH));
 
-	glutReshapeFunc(Reshop);//eji razmer
+	glutReshapeFunc(Reshop);
 
-	glutKeyboardFunc(keys);//char/klaviatura
-	glutSpecialFunc(keys);//int/klaviatura
+	glutKeyboardFunc(keys);
+	glutSpecialFunc(keys);
 
-	glutMotionFunc(mouse);//////////////MUK
+	glutMotionFunc(mouse);
 	glutMultiPassiveFunc(mouse);
-	glutMouseFunc(mouse);///////////////
-
-//	glutSetWindowTitle("ert");//zagalovki poxel
-
+	glutMouseFunc(mouse);
+	
 	glutTimerFunc(50, timer, 0);
 	glutDisplayFunc(Display);
 	glutMainLoop();
-
 
 	return 0;
 }
