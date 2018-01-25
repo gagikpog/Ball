@@ -6,9 +6,18 @@ int listW = 800;
 
 using namespace std;
 
-vector<Ball>(ball);
+vector<Ball> ball;
 
-Ball one;
+//Ball one;
+
+void test(Ball& b1, Ball& b2)
+{
+	if (sqrt((b1.X - b2.X)*(b1.X - b2.X) + (b1.Y - b2.Y)*(b1.Y - b2.Y)) < (b1.R + b2.R))
+	{
+		b1.rebound(b2.X, b2.Y, b2.VX, b2.VY);
+		b2.rebound(b1.X, b1.Y, b1.VX, b1.VY);
+	}
+}
 
 void Display()
 {
@@ -24,7 +33,13 @@ void Display()
 
 	glEnd();
 
-
+	for (int i = 0; i < ball.size() - 1; i++)
+	{
+		for (int j = i + 1; j < ball.size(); j++)
+		{
+			test(ball[i], ball[j]);
+		}
+	}
 
 	for (int i = 0; i < ball.size(); i++)
 	{
@@ -34,11 +49,7 @@ void Display()
 			ball.erase(ball.begin());
 	}
 
-	if (sqrt((ball[0].X - ball[1].X)*(ball[0].X - ball[1].X) + (ball[0].Y - ball[1].Y)*(ball[0].Y - ball[1].Y)) < (ball[0].R + ball[1].R))
-	{
-		ball[0].rebound(ball[1].X, ball[1].Y, ball[1].VX, ball[1].VY);
-		ball[1].rebound(ball[0].X, ball[0].Y, ball[0].VX, ball[0].VY);
-	}
+
 
 
 	glutSwapBuffers();
@@ -122,7 +133,7 @@ void mouse(int button, int state, int ax, int ay)
 	}
 
 	if (button == 2 && state == 1)
-		ball.push_back(one);
+		ball.push_back(Ball());
 
 	if (button == 1 && state == 1)
 		ball[0].rebound(1,1,1,1);
@@ -152,8 +163,7 @@ int main(int argc, char**argv)
 
 	for (int i = 0; i < 2; i++)
 	{
-		one.X = i * 110 + 100;
-		ball.push_back(one);
+		ball.push_back(Ball(rand()% listW, rand() % listH));
 	}
 
 	glutReshapeFunc(Reshop);//eji razmer

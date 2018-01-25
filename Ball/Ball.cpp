@@ -8,7 +8,22 @@ Ball::Ball()
 	R = 50.0f;
 	is_klick = false;
 	Gravity = false;
+	color[0] = rand() % 255;
+	color[1] = rand() % 255;
+	color[2] = rand() % 255;
 	//VY = 20;
+}
+
+Ball::Ball(float x, float y)
+{
+	X = x;
+	Y = y;
+	R = 50.0f;
+	is_klick = false;
+	Gravity = false;
+	color[0] = rand() % 255;
+	color[1] = rand() % 255;
+	color[2] = rand() % 255;
 }
 
 
@@ -21,7 +36,7 @@ void Ball::Init()
 {
 
 	glBegin(GL_POLYGON);
-	glColor3f(1, 0, 0);
+	glColor3b(color[0], color[1], color[2]);
 
 	for (float i = 0; i < 6; i+=0.1f)
 	{
@@ -63,7 +78,6 @@ void Ball::graviry()
 
 float Ball::rebound(float x, float y, float vx, float vy)
 {
-
 	float proek,xx,yy,L,tx,ty;
 	xx = X - x;
 	yy = Y - y;
@@ -75,7 +89,6 @@ float Ball::rebound(float x, float y, float vx, float vy)
 
 	VX = VX + tx - vx*0.5f;
 	VY = VY + ty - vy*0.5f;
-
 	return 0;
 }
 
