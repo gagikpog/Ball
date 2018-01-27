@@ -11,10 +11,9 @@ vector<Ball> balls;
 
 void test(Ball& b1, Ball& b2)
 {
-	if (sqrt((b1.X - b2.X)*(b1.X - b2.X) + (b1.Y - b2.Y)*(b1.Y - b2.Y)) < (b1.R + b2.R))
+	if (sqrt((b1.Position.X - b2.Position.X)*(b1.Position.X - b2.Position.X) + (b1.Position.Y - b2.Position.Y)*(b1.Position.Y - b2.Position.Y)) < (b1.R + b2.R))
 	{
-		b1.rebound(b2.X, b2.Y, b2.VX, b2.VY);
-		b2.rebound(b1.X, b1.Y, b1.VX, b1.VY);
+		b1.rebound(b2);
 	}
 }
 
