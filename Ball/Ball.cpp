@@ -2,8 +2,6 @@
 
 extern int WndH , WndW;
 
-
-
 Ball::Ball()
 {
 	Position.X = Position.Y = 500.0f;
@@ -82,86 +80,9 @@ void Ball::rebound(Ball& ball)
 	Vector2f vn2 = oo1.GetBase()*ball.Velocity.ScalarProduct(oo1) / oo1.GetLength();
 	Vector2f vt2 = oo2.GetBase()*ball.Velocity.ScalarProduct(oo2) / oo2.GetLength();
 
-
-
 	Velocity = vt1 - (vn1 + vn2*0.4f);
 	ball.Velocity = vt2 - (vn2 - vn1*0.4f);
 
-
-	/*/
-	float t1 = 0,t2 = 0,a,b,c,D;
-	a = (ball.VX - VX)*(ball.VX - VX) + (ball.VY - VY)*(ball.VY - VY);
-	b = 2 * ((ball.VX - VX)*(X - ball.X) + (ball.VY - VY)*(Y - ball.Y));
-	c = (X - ball.X)*(X - ball.X) + (Y - ball.Y)*(Y - ball.Y)-4*R*R;
-	D = b*b - 4*a*c;
-	if (D > 0)
-	{
-		t1 = (sqrtf(D) - b) / (2 * a);
-		t2 = (-sqrtf(D) - b) / (2 * a);
-	}
-
-	t1 = std::fminf(t1, t2);
-
-	X = X + t1*VX;
-	ball.X = ball.X + t1*ball.VX;
-	Y = Y + t1*VY;
-	ball.Y = ball.Y + t1*ball.VY;
-	/**/
-	/*/
-	Vector2f baseA(ball.X - X, ball.Y - Y);
-	Vector2f baseB = baseA*-1;
-
-	float l = R - baseA.GetLength()/2;
-
-	Vector2f av(VX, VY );
-	Vector2f bv(ball.VX, ball.VY);
-	
-	av = av.GetBase()*(av.GetLength() / l);
-	bv = bv.GetBase()*(bv.GetLength() / l);
-
-	float al, bl;
-	al = av.ScalarProduct(baseA) / baseA.GetLength();
-	bl = bv.ScalarProduct(baseB) / baseB.GetLength();
-	
-	baseA = baseA.GetBase();
-	baseB = baseB.GetBase();
-
-	av = bv+(baseB*al);
-	bv = av+(baseA*bl);
-
-	VX = av.X;
-	VY = av.Y;
-
-	ball.VX = bv.X;
-	ball.VY = bv.Y;
-
-	/* /
-	
-	float proek, xx, yy, L, tx, ty;
-	xx = X;
-	yy = Y;
-
-	L = len(xx, yy, x, y);
-
-	while ((L < R * 2))
-	{
-		xx -= VX*0.1; 
-		yy -= VY*0.1;
-		x -= vx*0.1;
-		y -= vy*0.1;
-		L = len(xx, yy, x, y);
-	}
-	return;
-
-	xx = xx - x;
-	yy = yy - y;
-		
-	proek =2*(xx*VX + yy*VY) / L;
-	tx = -(xx / L)*proek;
-	ty = -(yy / L)*proek;
-
-	VX = VX + tx - vx*0.5f;
-	VY = VY + ty - vy*0.5f;/**/
 }
 
 int Ball::Mouse(int button, int state, int ax, int ay)

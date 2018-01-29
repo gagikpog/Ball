@@ -5,7 +5,6 @@
 
 #define Pi 3.141592653589793238462643
 
-
 struct Vector2f
 {
 	Vector2f() {}

@@ -11,10 +11,8 @@ vector<Ball> balls;
 
 void test(Ball& b1, Ball& b2)
 {
-	if (sqrt((b1.Position.X - b2.Position.X)*(b1.Position.X - b2.Position.X) + (b1.Position.Y - b2.Position.Y)*(b1.Position.Y - b2.Position.Y)) < (b1.R + b2.R))
-	{
+	if((b1.Position-b2.Position).GetLength() < b1.R+b2.R)
 		b1.rebound(b2);
-	}
 }
 
 void Display()
@@ -95,7 +93,7 @@ int main(int argc, char**argv)
 	srand(time(NULL));
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_RGB |GLUT_DOUBLE );
-	glutInitWindowPosition(200,200);
+	glutInitWindowPosition(10,10);
 	glutInitWindowSize(WndW,WndH);
 	glutCreateWindow("Ball");
 
@@ -107,7 +105,7 @@ int main(int argc, char**argv)
 	glMatrixMode(GL_MODELVIEW);
 
 	for (int i = 0; i < 3; i++)
-		balls.push_back(Ball(rand()% WndW, rand() % WndH));
+		balls.push_back(Ball(rand()% (WndW -100)+50, rand() % (WndH-100)+50));
 
 	glutReshapeFunc(Reshop);
 
