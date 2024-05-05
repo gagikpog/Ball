@@ -1,0 +1,8 @@
+﻿.vs/
+Debug/
+Ball/Debug/
+Ball/Release/
+Release/
+Ball.VC.db
+desktop.ini
+Balls.xlsx
